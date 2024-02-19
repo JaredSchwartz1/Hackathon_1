@@ -29,30 +29,36 @@ function createGamePage() {
     label.setAttribute('for', 'questionInput')
     let input = document.createElement('input')
     input.setAttribute('type', 'text')
+    let submit = document.createElement('input')
+    submit.setAttribute('id', 'submit')
+    submit.setAttribute('type', 'button')
+    submit.setAttribute('value', 'Ask')
+    submit.addEventListener('click', () => { ballAnswer(ev) })
     form.appendChild(label)
     form.appendChild(input)
+    form.appendChild(submit)
     Page2.appendChild(form)
     let quitButton = document.createElement('button')
     quitButton.setAttribute('id', 'quitButton')
-    const quitButtonText = document.createTextNode('Click to quit')
+    const quitButtonText = document.createTextNode('Click to Surrender')
     quitButton.appendChild(quitButtonText)
     quitButton.addEventListener('click', returnToHomescreen)
     Page2.appendChild(quitButton)
     document.getElementById('title').remove()
-    document.getElementById('start').removeEventListener('click', createGamePage)
+    //document.getElementById('start').removeEventListener('click', createGamePage)
     document.getElementById('start').remove()
-    console.log(document.getElementById('background')!==null)
-    if (document.getElementById('background')!==null){
+    console.log(document.getElementById('background') !== null)
+    if (document.getElementById('background') !== null) {
         document.getElementById('background').remove()
-            }
+    }
 }
 
 function returnToHomescreen() {
     // Page2 = document.createElement('div')
-    background=document.createElement('div')
+    background = document.createElement('div')
     document.body.appendChild(background)
     background.classList.add('background')
-    background.setAttribute('id','background')
+    background.setAttribute('id', 'background')
     let title = document.createElement('h1')
     title.setAttribute('id', 'title')
     let titleText = document.createTextNode('Magic Eight Ball')
@@ -61,15 +67,19 @@ function returnToHomescreen() {
     startButton = document.createElement('button')
     startButton.classList.add('startButton')
     startButton.setAttribute('id', 'start')
-    let startButtonText = document.createTextNode('Click to start!')
+    let startButtonText = document.createTextNode('Test your luck...')
     startButton.appendChild(startButtonText)
     startButton.addEventListener('click', createGamePage)
     background.appendChild(startButton)
     console.log(ball.querySelectorAll('*'))
     document.getElementById('ball').remove()
     document.getElementById('form').remove()
-    document.getElementById('quitButton').removeEventListener('click', returnToHomescreen)
+   // document.getElementById('quitButton').removeEventListener('click', returnToHomescreen)
     document.getElementById('quitButton').remove()
     Page2.remove()
 }
 
+function ballAnswer(ev) {
+    console.log(ev.type)
+    
+}

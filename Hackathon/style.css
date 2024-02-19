@@ -1,7 +1,7 @@
 .background{
     width: 99vw;
-    height: 98vh;
-    background-color: grey;
+    height: 98.25vh;
+    background-color: rgb(0, 0, 0);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -12,8 +12,9 @@
     visibility: hidden;
 } 
 .screen{
+    background-color: black;
     width: 99vw;
-    height: 99vh;
+    height: 98vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -22,11 +23,31 @@
 label{
     margin: 20px;
 }
+h1{
+    font-style: italic;
+    font-weight: lighter;
+    padding: 100px;
+    color: rgb(255, 0, 0);
+    font-size: 80px;
+    font-stretch: extra-expanded;
+}
+#start{
+    background-color: black;
+    width: 20px;
+    height: 20px;
+    -webkit-text-fill-color: aliceblue;
+    border: black
+}
+label{
+    color: whitesmoke;
+}
 #quitButton{
     width: 100px;
     height: 50px;
     margin: 40px;
-}
-h1{
+    max-block-size: 20%;
+    background-color: black;
+    -webkit-text-fill-color: aliceblue;
+    border-color: black;
     
 }
