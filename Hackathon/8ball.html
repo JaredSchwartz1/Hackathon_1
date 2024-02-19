@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,33 +8,37 @@
     <link rel="stylesheet" href="style.css">
     <style>
         .ball {
-            width: 400px;
-            height: 400px;
+            width: 500px;
+            height: 500px;
             background-color: black;
+            background: radial-gradient(circle at 50% 50%, #fcfcfc, #010305 80%);
             border-radius: 50%;
             margin: 50px;
-            transform: rotate(30deg);
-            transform-style: preserve-3d;   
+            padding: 50px;
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
         }
-        @keyframes moveAndRotate {
-      50p% {
-        transform: rotateY(0deg) translateX(0);
-      }
-    }
     </style>
 </head>
+
 <body>
-    <div class="background">
-        <h1>Magic Eight Ball</h1>
-        <button class="startButton" id="start">Click to start!</button>
+    <div class="background" id="background">
+        <h1 id="title">Magic Eight Ball</h1>
+        <button class="startButton" id="start">Test your luck...</button>
     </div>
-    <div class="ball">
-        <div class="scene"></div>
-        <div class="whiteSurface" id="whiteSurface"></div>
+    <!-- <div class="invisible, screen" id="page2"> -->
+        
+        <!-- <div class="ball">
+            <div class="scene"></div>
+            <div class="whiteSurface" id="whiteSurface"></div>
+        </div>
+        <form>
+            <label for="questionInput">Ask the ball a question</label><input type="text">
+        </form> -->
     </div>
-    <form>
-        <label for="Ask the ball a question"></label><input type="text">
-    </form>
     <script src="script.js"></script>
+    
 </body>
+
 </html>
