@@ -1,10 +1,32 @@
 .background{
-    background-color: grey
+    width: 99vw;
+    height: 98vh;
+    background-color: grey;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
-
-
-.ball{
-width:;
-
-
+.invisible{
+    display: none;
+    visibility: hidden;
+} 
+.screen{
+    width: 99vw;
+    height: 99vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+label{
+    margin: 20px;
+}
+#quitButton{
+    width: 100px;
+    height: 50px;
+    margin: 40px;
+}
+h1{
+    
 }

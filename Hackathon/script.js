@@ -1,11 +1,75 @@
-let startButton=document.getElementById()
+let background = document.createElement('div')
+let startButton = document.getElementById('start')
+let answers = ['It is certain', 'Reply hazy, try again', 'Don’t count on it', 'It is decidedly so', 'Ask again later', 'My reply is no', 'Without a doubt', 'Better not tell you now', 'My sources say no', 'Yes definitely', 'Cannot predict now', 'Outlook not so good', 'You may rely on it', 'Concentrate and ask again', 'Very doubtful', 'As I see it, yes', 'Most likely', 'Outlook good', 'Yes', 'Signs point to yes']
+startButton.addEventListener('click', createGamePage)
+let Page2 = document.createElement('div')
 
+function createGamePage() {
+    Page2 = document.createElement('div')
+    document.body.appendChild(Page2)
+    Page2.classList.add('screen')
+    Page2.setAttribute('id', 'page2')
+    Page2.classList.remove('invisible')
+    let ball = document.createElement('div')
+    ball.classList.add('ball')
+    ball.setAttribute('id', 'ball')
+    Page2.appendChild(ball)
+    let scene = document.createElement('div')
+    scene.classList.add('scene')
+    let whiteSurface = document.createElement('div')
+    whiteSurface.classList.add('whiteSurface')
+    whiteSurface.setAttribute('id', 'whiteSurface')
+    ball.appendChild(scene)
+    ball.appendChild(whiteSurface)
+    let form = document.createElement('form')
+    form.setAttribute('id', 'form')
+    let label = document.createElement('label')
+    let labelText = document.createTextNode('Ask the ball a question')
+    label.appendChild(labelText)
+    label.setAttribute('for', 'questionInput')
+    let input = document.createElement('input')
+    input.setAttribute('type', 'text')
+    form.appendChild(label)
+    form.appendChild(input)
+    Page2.appendChild(form)
+    let quitButton = document.createElement('button')
+    quitButton.setAttribute('id', 'quitButton')
+    const quitButtonText = document.createTextNode('Click to quit')
+    quitButton.appendChild(quitButtonText)
+    quitButton.addEventListener('click', returnToHomescreen)
+    Page2.appendChild(quitButton)
+    document.getElementById('title').remove()
+    document.getElementById('start').removeEventListener('click', createGamePage)
+    document.getElementById('start').remove()
+    console.log(document.getElementById('background')!==null)
+    if (document.getElementById('background')!==null){
+        document.getElementById('background').remove()
+            }
+}
 
-let whiteSurface = document.getElementById('whiteSurface')
-let answers = ['It is certain', 'Reply hazy, try again', 'Don\’t count on it','It is decidedly so', 'Ask again later', 'My reply is no','Without a doubt', 'Better not tell you now', 'My sources say no','Yes definitely', 'Cannot predict now', 'Outlook not so good','You may rely on it', 'Concentrate and ask again', 'Very doubtful','As I see it, yes','Most likely','Outlook good','Yes','Signs point to yes']
+function returnToHomescreen() {
+    // Page2 = document.createElement('div')
+    background=document.createElement('div')
+    document.body.appendChild(background)
+    background.classList.add('background')
+    background.setAttribute('id','background')
+    let title = document.createElement('h1')
+    title.setAttribute('id', 'title')
+    let titleText = document.createTextNode('Magic Eight Ball')
+    title.appendChild(titleText)
+    background.appendChild(title)
+    startButton = document.createElement('button')
+    startButton.classList.add('startButton')
+    startButton.setAttribute('id', 'start')
+    let startButtonText = document.createTextNode('Click to start!')
+    startButton.appendChild(startButtonText)
+    startButton.addEventListener('click', createGamePage)
+    background.appendChild(startButton)
+    console.log(ball.querySelectorAll('*'))
+    document.getElementById('ball').remove()
+    document.getElementById('form').remove()
+    document.getElementById('quitButton').removeEventListener('click', returnToHomescreen)
+    document.getElementById('quitButton').remove()
+    Page2.remove()
+}
 
- let 8_ball= {
-
-
-
- }
