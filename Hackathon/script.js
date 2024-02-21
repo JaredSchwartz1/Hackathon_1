@@ -3,6 +3,9 @@ let startButton = document.getElementById('start')
 let answers = ['It is certain', 'Reply hazy, try again', 'Don’t count on it', 'It is decidedly so', 'Ask again later', 'My reply is no', 'Without a doubt', 'Better not tell you now', 'My sources say no', 'Yes definitely', 'Cannot predict now', 'Outlook not so good', 'You may rely on it', 'Concentrate and ask again', 'Very doubtful', 'As I see it, yes', 'Most likely', 'Outlook good', 'Yes', 'Signs point to yes']
 startButton.addEventListener('click', createGamePage)
 let Page2 = document.createElement('div')
+let questionsAndAnswers = [];
+let returnArray = []
+let indexCheck = false;
 
 function createGamePage() {
     Page2 = document.createElement('div')
@@ -29,11 +32,12 @@ function createGamePage() {
     label.setAttribute('for', 'questionInput')
     let input = document.createElement('input')
     input.setAttribute('type', 'text')
+    input.setAttribute('id', 'formInput')
     let submit = document.createElement('input')
     submit.setAttribute('id', 'submit')
-    submit.setAttribute('type', 'button')
+    submit.setAttribute('type', 'submit')
     submit.setAttribute('value', 'Ask')
-    submit.addEventListener('click', () => { ballAnswer(ev) })
+    form.addEventListener('submit', (ev) => { ballAnswer(ev, input, returnArray) })
     form.appendChild(label)
     form.appendChild(input)
     form.appendChild(submit)
@@ -44,17 +48,10 @@ function createGamePage() {
     quitButton.appendChild(quitButtonText)
     quitButton.addEventListener('click', returnToHomescreen)
     Page2.appendChild(quitButton)
-    document.getElementById('title').remove()
-    //document.getElementById('start').removeEventListener('click', createGamePage)
-    document.getElementById('start').remove()
-    console.log(document.getElementById('background') !== null)
-    if (document.getElementById('background') !== null) {
-        document.getElementById('background').remove()
-    }
+    document.getElementById('background').remove()
 }
 
 function returnToHomescreen() {
-    // Page2 = document.createElement('div')
     background = document.createElement('div')
     document.body.appendChild(background)
     background.classList.add('background')
@@ -71,15 +68,96 @@ function returnToHomescreen() {
     startButton.appendChild(startButtonText)
     startButton.addEventListener('click', createGamePage)
     background.appendChild(startButton)
-    console.log(ball.querySelectorAll('*'))
-    document.getElementById('ball').remove()
-    document.getElementById('form').remove()
-   // document.getElementById('quitButton').removeEventListener('click', returnToHomescreen)
-    document.getElementById('quitButton').remove()
     Page2.remove()
 }
 
-function ballAnswer(ev) {
-    console.log(ev.type)
-    
+function ballAnswer(ev, input, returnArray) {
+    ev.preventDefault()
+    if (input.value == '') {
+        alert('No question was typed. Please type an answer.')
+        return;
+    }
+    if (document.getElementById('answer') !== null) {
+        document.getElementById('answer').remove()
+    }
+    let response = answers[Math.floor(Math.random() * (answers.length - 1))];
+    let responseTextElement = document.createElement('h2')
+    responseTextElement.setAttribute('id', 'answer')
+    let responseText = document.createTextNode(`${response}`)
+    responseTextElement.appendChild(responseText)
+    document.getElementById('whiteSurface').appendChild(responseTextElement)
+    questionsAndAnswers.push(input.value)
+    questionsAndAnswers.push(responseText.textContent)
+    let lastQuestion = questionsAndAnswers.length - 2
+    returnArray = [input, responseTextElement, responseText, questionsAndAnswers, lastQuestion]
+    //console.log(lastQuestion)
+    //console.log(returnArray)
+    // console.log(questionsAndAnswers.length)
+    if (questionsAndAnswers.length == 2) {
+        console.log('first')
+        input.addEventListener('keydown', (ev) => { oldQuestions(ev, returnArray) })
+    }
+    else {
+        console.log('subsequent')
+        console.log(input)
+        input.removeEventListener('keydown', (ev) => { oldQuestions(ev, returnArray) })
+        // input.addEventListener('keydown', (ev) => { oldQuestions(ev, returnArray) })
+    }
+    // return returnArray;
+}
+
+function oldQuestions(ev, returnArray) {
+    //console.log(lastQuestion)
+    if (ev.key == 'ArrowDown') {
+        let input = returnArray[0]
+        let responseTextElement = returnArray[1]
+        let responseText = returnArray[2]
+        let questionsAndAnswers = returnArray[3]
+        let lastQuestion = ((questionsAndAnswers.length) - 2)
+        //console.log(returnArray)
+        //console.log(lastQuestion)
+        if (lastQuestion == (questionsAndAnswers.length - 2)) {
+            console.log('arrowDownFirstTime')
+            input.value = questionsAndAnswers[lastQuestion]
+            responseText.textContent = questionsAndAnswers[lastQuestion + 1]
+            responseTextElement.appendChild(responseText)
+            let returnArray = [input, responseTextElement, responseText, questionsAndAnswers, lastQuestion]
+            indexCheck = true;
+            //  input.removeEventListener('keydown', (ev) => { oldQuestions(ev, returnArray) })
+            //   input.addEventListener('keydown', (ev) => { oldQuestions(ev, returnArray) })
+        }
+        else if (lastQuestion === 0) {
+            console.log(lastQuestion)
+            alert('There were no prior questions.')
+            return;
+        }
+        else {
+            console.log('nice')
+            lastQuestion -= 2
+            input.value = questionsAndAnswers[lastQuestion]
+            responseText.textContent = questionsAndAnswers[lastQuestion + 1]
+            console.log(lastQuestion)
+            responseTextElement.appendChild(responseText)
+            let returnArray = [input, responseTextElement, responseText, questionsAndAnswers, lastQuestion]
+            //  input.removeEventListener('keydown', (ev) => { oldQuestions(ev, returnArray) })
+            //  input.addEventListener('keydown', (ev) => { oldQuestions(ev, returnArray) })
+        }
+    }
+
+    if (ev.key == 'ArrowUp') {
+        let input = returnArray[0]
+        let responseTextElement = returnArray[1]
+        let responseText = returnArray[2]
+        let questionsAndAnswers = returnArray[3]
+        let lastQuestion = ((questionsAndAnswers.length) - 2)
+        if (lastQuestion == (questionsAndAnswers.length - 2)) {
+            alert('there are no further questions since this was the last one you asked.')
+            return;
+        }
+        lastQuestion += 2
+        input.value = questionsAndAnswers[lastQuestion]
+        responseText.textContent = questionsAndAnswers[lastQuestion + 1]
+        responseTextElement.appendChild(responseText)
+    }
+
 }
