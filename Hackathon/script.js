@@ -3,9 +3,11 @@ let startButton = document.getElementById('start')
 let answers = ['It is certain', 'Reply hazy, try again', 'Don’t count on it', 'It is decidedly so', 'Ask again later', 'My reply is no', 'Without a doubt', 'Better not tell you now', 'My sources say no', 'Yes definitely', 'Cannot predict now', 'Outlook not so good', 'You may rely on it', 'Concentrate and ask again', 'Very doubtful', 'As I see it, yes', 'Most likely', 'Outlook good', 'Yes', 'Signs point to yes']
 startButton.addEventListener('click', createGamePage)
 let Page2 = document.createElement('div')
-let questionsAndAnswers = [];
-let returnArray = []
-let indexCheck = false;
+let questionsAndAnswers;
+let returnArray;
+function handleKeyDown(ev) {
+    oldQuestions(ev, returnArray)
+}
 
 function createGamePage() {
     Page2 = document.createElement('div')
@@ -32,7 +34,8 @@ function createGamePage() {
     label.setAttribute('for', 'questionInput')
     let input = document.createElement('input')
     input.setAttribute('type', 'text')
-    input.setAttribute('id', 'formInput')
+    input.setAttribute('id', 'questionInput')
+    input.setAttribute('name', 'questionInput')
     let submit = document.createElement('input')
     submit.setAttribute('id', 'submit')
     submit.setAttribute('type', 'submit')
@@ -44,6 +47,7 @@ function createGamePage() {
     Page2.appendChild(form)
     let quitButton = document.createElement('button')
     quitButton.setAttribute('id', 'quitButton')
+    quitButton.setAttribute('type', 'button')
     const quitButtonText = document.createTextNode('Click to Surrender')
     quitButton.appendChild(quitButtonText)
     quitButton.addEventListener('click', returnToHomescreen)
@@ -64,6 +68,7 @@ function returnToHomescreen() {
     startButton = document.createElement('button')
     startButton.classList.add('startButton')
     startButton.setAttribute('id', 'start')
+    startButton.setAttribute('type', 'button')
     let startButtonText = document.createTextNode('Test your luck...')
     startButton.appendChild(startButtonText)
     startButton.addEventListener('click', createGamePage)
@@ -73,6 +78,8 @@ function returnToHomescreen() {
 
 function ballAnswer(ev, input, returnArray) {
     ev.preventDefault()
+    console.log(input)
+    console.log(returnArray)
     if (input.value == '') {
         alert('No question was typed. Please type an answer.')
         return;
@@ -86,36 +93,35 @@ function ballAnswer(ev, input, returnArray) {
     let responseText = document.createTextNode(`${response}`)
     responseTextElement.appendChild(responseText)
     document.getElementById('whiteSurface').appendChild(responseTextElement)
+    questionsAndAnswers=[]
     questionsAndAnswers.push(input.value)
     questionsAndAnswers.push(responseText.textContent)
     let lastQuestion = questionsAndAnswers.length - 2
     returnArray = [input, responseTextElement, responseText, questionsAndAnswers, lastQuestion]
-    //console.log(lastQuestion)
-    //console.log(returnArray)
-    // console.log(questionsAndAnswers.length)
+    console.log(questionsAndAnswers)
+    
     if (questionsAndAnswers.length == 2) {
         console.log('first')
-        input.addEventListener('keydown', (ev) => { oldQuestions(ev, returnArray) })
+       input.addEventListener('keydown', handleKeyDown)
     }
     else {
         console.log('subsequent')
-        console.log(input)
-        input.removeEventListener('keydown', (ev) => { oldQuestions(ev, returnArray) })
-        // input.addEventListener('keydown', (ev) => { oldQuestions(ev, returnArray) })
+        input.removeEventListener('keydown', handleKeyDown)
+        input.addEventListener('keydown', handleKeyDown)
     }
-    // return returnArray;
+    return returnArray;
 }
 
 function oldQuestions(ev, returnArray) {
-    //console.log(lastQuestion)
     if (ev.key == 'ArrowDown') {
+        console.log(returnArray)
         let input = returnArray[0]
         let responseTextElement = returnArray[1]
         let responseText = returnArray[2]
         let questionsAndAnswers = returnArray[3]
         let lastQuestion = ((questionsAndAnswers.length) - 2)
-        //console.log(returnArray)
-        //console.log(lastQuestion)
+        console.log(returnArray)
+        console.log(lastQuestion)
         if (lastQuestion == (questionsAndAnswers.length - 2)) {
             console.log('arrowDownFirstTime')
             input.value = questionsAndAnswers[lastQuestion]
@@ -123,8 +129,8 @@ function oldQuestions(ev, returnArray) {
             responseTextElement.appendChild(responseText)
             let returnArray = [input, responseTextElement, responseText, questionsAndAnswers, lastQuestion]
             indexCheck = true;
-            //  input.removeEventListener('keydown', (ev) => { oldQuestions(ev, returnArray) })
-            //   input.addEventListener('keydown', (ev) => { oldQuestions(ev, returnArray) })
+            input.removeEventListener('keydown', handleKeyDown)
+            input.addEventListener('keydown', handleKeyDown)
         }
         else if (lastQuestion === 0) {
             console.log(lastQuestion)
@@ -139,12 +145,13 @@ function oldQuestions(ev, returnArray) {
             console.log(lastQuestion)
             responseTextElement.appendChild(responseText)
             let returnArray = [input, responseTextElement, responseText, questionsAndAnswers, lastQuestion]
-            //  input.removeEventListener('keydown', (ev) => { oldQuestions(ev, returnArray) })
-            //  input.addEventListener('keydown', (ev) => { oldQuestions(ev, returnArray) })
+            input.removeEventListener('keydown', handleKeyDown)
+            input.addEventListener('keydown', handleKeyDown)
         }
     }
 
     if (ev.key == 'ArrowUp') {
+        console.log('hey')
         let input = returnArray[0]
         let responseTextElement = returnArray[1]
         let responseText = returnArray[2]
